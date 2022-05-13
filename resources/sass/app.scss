@@ -5,4 +5,157 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+//@import '~bootstrap/scss/bootstrap';
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+  }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue',
+      Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom right, $bg-image-top, $bg-image-bottom);
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding: 0;
+    margin: 0;
+  }
+  .main-top-section {
+    display: flex;
+    position: relative;
+    height: 100vh;
+    .items {
+      min-width: 250px;
+      border: 1px solid $card-border;
+      margin: 10px;
+      border-radius: 4px;
+      height: fit-content;
+      background-color: $text-color;
+      &__column1-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 10px 10px;
+        background-color: $card-border;
+        & p {
+          flex: 1;
+          text-align: center;
+        }
+        & .remove-card-a {
+          cursor: pointer;
+          background-color: $card-bgclose;
+          padding: 4px 6px;
+          color: $text-color;
+          border-radius: 2px;
+        }
+        & .add-card-a {
+            cursor: pointer;
+            background-color: $card-bgadd;
+            padding: 4px 6px;
+            color: $text-color;
+            border-radius: 2px;
+          }
+      }
+      &__card {
+        margin: 8px;
+        border: 1px solid $card-border;
+        border-radius:0px 0px 6px 6px;
+        &__innercard {
+          padding: 10px 10px 10px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: $card-bgcolor;
+          & p {
+            text-align: center;
+            flex: 1;
+          }
+          & a {
+            cursor: pointer;
+            color: $card-bgclose;
+          }
+        }
+        &__description{
+            padding: 10px;
+        }
+      }
+    }
+    .add-menu {
+      position: fixed;
+      right: 100px;
+      bottom: 28px;
+      & button {
+        font-size: 12px;
+        background-color: $bg-addnew;
+        border: 1px solid $text-color;
+        padding: 10px;
+        color:$text-color;
+        height: 40px;
+        width: 80px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+    }
+    .db-menu {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      & button {
+        font-size: 10px;
+        background-color: $card-bgexport;
+        border: 1px solid $text-color;
+        padding: 10px;
+        border-radius: 50%;
+        height: 80px;
+        width: 80px;
+        cursor: pointer;
+        color: $text-color;
+      }
+    }
+  }
+  .new-card-form {
+    &__add {
+        background-color: $bg-addnew;
+        text-align: center;
+        padding: 4px 0px;
+        color: $text-color;
+    }
+  }
+
+  .add-form {
+      padding: 20px;
+      margin-top: 30px;
+      &__group {
+        display: flex;
+        flex-direction: column;
+        & label {
+            padding-top: 10px;
+        }
+        & input {
+            border: 1px solid #000;
+            height: 40px;
+        }
+      }
+      &__btn {
+        margin-top: 45px;
+        text-align: end;
+        & button {
+            padding: 12px 22px;
+            background-color:  $card-bgadd;
+            color: $text-color;
+            cursor: pointer;
+        }
+      }
+      .invalid-feedback{
+        color:$card-bgclose;
+     }
+  }
