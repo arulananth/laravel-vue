@@ -5396,7 +5396,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -5405,7 +5404,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       list_id: 0,
-      list_col: []
+      list_col: [],
+      before_move: [],
+      switchView: false
     };
   },
   computed: {},
@@ -5437,10 +5438,52 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    reOrderCards: function reOrderCards($event, id) {
-      if ($event.moved) {}
+    reOrderCards: function reOrderCards($event) {
+      if ($event.moved) {
+        var list_id_data = this.list_col.find(function (c) {
+          return c.id == $event.moved.element.list_id;
+        });
+        var postData = list_id_data.cardlists.map(function (_ref) {
+          var id = _ref.id,
+              orderRow = _ref.orderRow,
+              list_id = _ref.list_id;
+          return {
+            id: id,
+            orderRow: orderRow,
+            list_id: list_id
+          };
+        });
+        this.updateOrderRow(postData);
+        this.switchView = false;
+      }
 
-      if ($event.added) {}
+      if ($event.added) {
+        this.onEndUpdate();
+      }
+    },
+    onEndUpdate: function onEndUpdate() {
+      var postData = [];
+      this.list_col.forEach(function (val, index) {
+        if (val.cardlists.length > 0) {
+          val.cardlists.forEach(function (card, c) {
+            postData.push({
+              orderRow: card.orderRow,
+              list_id: val.id,
+              id: card.id
+            });
+          });
+        }
+      });
+      this.updateOrderRow(postData);
+    },
+    updateOrderRow: function updateOrderRow(postData) {
+      if (postData.length == 0) return false;
+      var self = this;
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/update-card', {
+        data: postData
+      }).then(function (response) {})["catch"](function (error) {
+        console.log(error);
+      });
     },
     getDeletedIndex: function getDeletedIndex(deletedData) {
       if (deletedData) {
@@ -32995,47 +33038,50 @@ var render = function () {
       _vm._l(_vm.list_col, function (col, index) {
         return _c(
           "div",
-          { key: col.id, staticClass: "items" },
+          { key: col.id, staticClass: "items", attrs: { "data-id": col.id } },
           [
-            _c("div", { staticClass: "items__column1-text" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "add-card-a",
-                  on: {
-                    click: function ($event) {
-                      return _vm.addCardList(col.id)
+            _c(
+              "div",
+              {
+                staticClass: "items__column1-text",
+                attrs: { "data-id": col.id },
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "add-card-a",
+                    on: {
+                      click: function ($event) {
+                        return _vm.addCardList(col.id)
+                      },
                     },
                   },
-                },
-                [_vm._v("+")]
-              ),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(col.title))]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "remove-card-a",
-                  on: {
-                    click: function ($event) {
-                      return _vm.deleteColList(col.id, index)
+                  [_vm._v("+")]
+                ),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(col.title))]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "remove-card-a",
+                    on: {
+                      click: function ($event) {
+                        return _vm.deleteColList(col.id, index)
+                      },
                     },
                   },
-                },
-                [_vm._v("X")]
-              ),
-            ]),
+                  [_vm._v("X")]
+                ),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "draggable",
               {
                 attrs: { list: col.cardlists, group: "people" },
-                on: {
-                  change: function ($event) {
-                    return _vm.reOrderCards($event, col.id)
-                  },
-                },
+                on: { change: _vm.reOrderCards },
               },
               _vm._l(col.cardlists, function (card, cindex) {
                 return _c(

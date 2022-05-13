@@ -70,6 +70,7 @@ body {
         margin: 8px;
         border: 1px solid $card-border;
         border-radius:0px 0px 6px 6px;
+        cursor:move;
         &__innercard {
           padding: 10px 10px 10px 10px;
           display: flex;

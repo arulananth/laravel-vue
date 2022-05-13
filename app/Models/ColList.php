@@ -18,6 +18,6 @@ class ColList extends Model
 
 public function cardlists()
 {
-    return $this->hasMany(CardList::class,"list_id");
+    return $this->hasMany(CardList::class,"list_id")->orderBy("orderRow","asc")->orderBy("updated_at","desc");
 }
 }

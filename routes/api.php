@@ -23,3 +23,4 @@ Route::post('store-card', [TrelloBoard::class, 'storeCard']);
 Route::post('store-col', [TrelloBoard::class, 'storeCol']);
 Route::delete('delete-col/{id}', [TrelloBoard::class, 'deleteCol']);
 Route::delete('delete-card/{id}', [TrelloBoard::class, 'deleteCard']);
+Route::post('update-card', [TrelloBoard::class, 'updateCard']);

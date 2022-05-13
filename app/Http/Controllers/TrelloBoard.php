@@ -66,6 +66,24 @@ class TrelloBoard extends Controller
         ColList::where("id",$request->id)->delete();
         return response()->json(["message"=>"Deleted Successfully!"], 200);
     }
+    public function updateCard (Request $request)
+    {
+        if($request->data && is_array($request->data))
+        {
+          foreach($request->data as $k=>$card)
+          {
+
+            $card['orderRow']=(int) $k+1;
+            CardList::where("id",$card['id'])->update(["list_id"=>$card["list_id"],"orderRow"=>$card['orderRow']]);
+
+          }
+        return response()->json(["message"=>"Updated Successfully!"], 201);
+        }
+        else
+        {
+            return response()->json(["message"=>"Invalid Request!"], 200);
+        }
+    }
     public function deleteCard(Request $request)
     {
         CardList::where("id",$request->id)->delete();
