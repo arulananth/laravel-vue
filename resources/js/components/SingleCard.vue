@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div v-for="(card,index) in cards" :key="card.id" class="items__card">
+
                 <div class="items__card__innercard">
                 <p>{{card.title}}</p>
-                <a @click="deleteCard(card.id,index)">X</a>
+                <a @click="deleteCard(card.id,cindex)">X</a>
                 </div>
                 <div class="items__card__description">{{card.description}}</div>
-        </div>
+
 
     </div>
 </template>
@@ -15,12 +15,18 @@
 import axios from "axios";
 export default {
   name:'SingleCard',
-  props: ['cards','listId'],
+  props: ['card','listId','cindex'],
   data() {
   return {
-    list_id: 0
-
+    list_id: 0,
+    cardIndex:0,
+    cardData:{}
   }
+  },
+  created() {
+       this.list_id = this.listId;
+       this.cardIndex = this.cindex;
+       this.cardData = this.card;
   },
    mounted() {
     this.$watch(
@@ -31,10 +37,11 @@ export default {
   methods:{
       deleteCard(id,index)
       {
+          let self=this;
           axios.delete('/api/delete-card/'+id)
                 .then(function (response) {
                   console.log(response)
-                   this.cards.splice(index,1)
+                  self.$emit('deletedIndex', {index:index,id:id,list_id:self.list_id});
                 },function (error) {
                   console.log(error)
                 });

@@ -36,7 +36,8 @@ class TrelloBoard extends Controller
         $column->status = 1;
         $column->orderCol = intval(ColList::count())+1;
         $column->save();
-        return response()->json(["data"=>$column], 201);
+        $col=ColList::where("id",$column->id)->with('cardlists')->first();
+        return response()->json(["data"=>$col], 201);
     }
 
     public function storeCard(Request $request)
