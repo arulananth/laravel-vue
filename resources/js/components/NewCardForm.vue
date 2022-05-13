@@ -17,8 +17,8 @@
                 <div class="form-group add-form__group">
                     <label for="name">Description</label>
                     <input type="text" v-model="userForm.description" id="description" name="description" class="form-control"
-                        :class="{ 'is-invalid': isSubmitted && $v.userForm.name.$error }" />
-                    <div v-if="isSubmitted && !$v.userForm.name.required" class="invalid-feedback">Description field is required</div>
+                        :class="{ 'is-invalid': isSubmitted && $v.userForm.description.$error }" />
+                    <div v-if="isSubmitted && !$v.userForm.description.required" class="invalid-feedback">Description field is required</div>
                 </div>
                 <div class="form-group add-form__btn">
                     <button class="btn btn-danger btn-block">Save</button>
@@ -84,6 +84,8 @@ export default {
                 .then(function (response) {
                   if(response && response.data && response.data.data)
                   {
+                    self.userForm.name='';
+                    self.userForm.description='';
                     self.newCard =  response.data.data;
                     self.newCardCount++;
                             self.$notify({

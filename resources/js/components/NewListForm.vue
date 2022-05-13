@@ -75,6 +75,7 @@ export default {
                 .then(function (response) {
                   if(response && response.data && response.data.data)
                   {
+                      self.userForm.name='';
                       self.newListCount++;
                       self.newList = response.data.data;
                   }

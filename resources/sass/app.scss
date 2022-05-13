@@ -33,6 +33,7 @@ body {
     display: flex;
     position: relative;
     height: 100vh;
+
     .items {
       min-width: 250px;
       border: 1px solid $card-border;
@@ -89,6 +90,7 @@ body {
         }
       }
     }
+
     .add-menu {
       position: fixed;
       right: 100px;

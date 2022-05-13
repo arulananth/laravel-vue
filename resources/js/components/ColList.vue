@@ -1,14 +1,18 @@
 <template>
   <div class="main-top-section">
+
   <div class="items" v-for="(col,index) in list_col" :key="col.id">
         <div class="items__column1-text">
                     <a @click="addCardList(col.id)" class="add-card-a">+</a>
                     <p>{{col.title}}</p>
                     <a @click="deleteColList(col.id,index)" class="remove-card-a">X</a>
         </div>
+        <draggable  :list="col.cardlists" group="people" @change="reOrderCards(
+            $event,col.id)">
         <div v-for="(card,cindex) in col.cardlists" :key="card.id" class="items__card">
         <single-card @deletedIndex="getDeletedIndex" :cindex=cindex :listId=list_id :card=card></single-card>
         </div>
+        </draggable>
    </div>
 
  <div class="add-menu" @click="addColList"><button>Add New</button></div>
@@ -19,6 +23,7 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import axios from "axios";
 import SingleCard from './SingleCard.vue';
 export default {
@@ -36,7 +41,8 @@ export default {
 
   },
   components: {
-   SingleCard
+   SingleCard,
+   draggable
   },
   created() {
        this.list_col = this.list;
@@ -58,6 +64,17 @@ export default {
       });
   },
   methods:{
+      reOrderCards($event,id)
+      {
+          if($event.moved)
+          {
+
+          }
+          if($event.added)
+          {
+
+          }
+      },
       getDeletedIndex(deletedData)
       {
          if(deletedData)
