@@ -14,6 +14,7 @@ import Vuelidate from 'vuelidate';
 
 import axios from 'axios';
 
+import Notifications from 'vue-notification';
 
 /**
  * The following block of code may be used to automatically register your
@@ -30,11 +31,14 @@ Vue.use(VueJsModal, {
     dynamicDefaults: {
       draggable: true
     }
-  })
-  Vue.use(Vuelidate)
+  });
+Vue.use(Vuelidate);
+Vue.use(Notifications);
 
-
-
+Vue.component(
+    "register-validation-error",
+    require("./components/laravel-validatoion-error.vue").default,
+  );
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('new-list-form', require('./components/NewListForm.vue').default);
 Vue.component('new-card-form', require('./components/NewCardForm.vue').default);

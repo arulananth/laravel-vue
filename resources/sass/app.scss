@@ -130,7 +130,16 @@ body {
         color: $text-color;
     }
   }
+  .alert-danger
+  {
+    margin-top: 5px;
+    .invalid-feedback{
+        color:$card-bgclose;
 
+        text-align: center;
+
+     }
+  }
   .add-form {
       padding: 20px;
       margin-top: 30px;
@@ -157,5 +166,8 @@ body {
       }
       .invalid-feedback{
         color:$card-bgclose;
+
+        text-align: center;
+
      }
   }

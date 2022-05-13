@@ -6,6 +6,8 @@
             <h2 class="alert-heading new-card-form__add">Add Column</h2>
         </div>
         <form @submit.prevent="handleSubmit">
+            <register-validation-error :errors="form_list_errors"></register-validation-error>
+
             <div class="add-form">
                 <div class="form-group add-form__group">
                     <label for="name">Title</label>
@@ -42,6 +44,7 @@ export default {
   data: () => ({
     newList:{},
     newListCount:0,
+    form_list_errors:[],
     userForm: {
         name: ""
 
@@ -75,9 +78,29 @@ export default {
                       self.newListCount++;
                       self.newList = response.data.data;
                   }
+
+                  else
+                  {
+                      console.log(response.data)
+                      self.$notify({
+
+                            title: 'Error!',
+                            text: 'Try Again!',
+                            type:'success'
+                            });
+
+                  }
                 })
                 .catch(function (error) {
-                console.log(error)
+                  if(error && error.response && error.response.data && error.response.data.errors)
+                   self.form_list_errors =  error.response.data.errors;
+                   else
+                   self.$notify({
+                            group: 'vue',
+                            title: 'Error!',
+                            text: 'Try Again!',
+                            type:'success'
+                            });
                 });
 
     }

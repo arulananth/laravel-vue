@@ -126,6 +126,14 @@ h6 {
   color: #fff;
 }
 
+.alert-danger {
+  margin-top: 5px;
+}
+.alert-danger .invalid-feedback {
+  color: #ff0000;
+  text-align: center;
+}
+
 .add-form {
   padding: 20px;
   margin-top: 30px;
@@ -153,4 +161,5 @@ h6 {
 }
 .add-form .invalid-feedback {
   color: #ff0000;
+  text-align: center;
 }

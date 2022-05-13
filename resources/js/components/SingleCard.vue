@@ -35,9 +35,8 @@ export default {
                 .then(function (response) {
                   console.log(response)
                    this.cards.splice(index,1)
-                })
-                .catch(function (error) {
-                console.log(error)
+                },function (error) {
+                  console.log(error)
                 });
       }
   }

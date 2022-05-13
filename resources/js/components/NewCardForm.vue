@@ -6,6 +6,7 @@
             <h2 class="alert-heading new-card-form__add">Add Card</h2>
         </div>
         <form @submit.prevent="handleSubmit">
+            <register-validation-error :errors="form_list_errors"></register-validation-error>
             <div class="add-form">
                 <div class="form-group add-form__group">
                     <label for="name">Title</label>
@@ -45,6 +46,7 @@ export default {
   props: ["listId"],
   data: () => ({
     newCard:{},
+    form_list_errors:[],
     newCardCount:0,
     userForm: {
         name: "",
@@ -84,22 +86,37 @@ export default {
                   {
                     self.newCard =  response.data.data;
                     self.newCardCount++;
+                            self.$notify({
+
+                            title: 'Success!',
+                            text: 'New card created!',
+                            type:'success'
+                            });
                   }
-                })
-                .catch(function (error) {
-                console.log(error)
+                  else
+                  {
+                      console.log(response.data)
+                      self.$notify({
+
+                            title: 'Error!',
+                            text: 'Try Again!',
+                            type:'success'
+                            });
+
+                  }
+                }).catch(error=> {
+                   if(error && error.response && error.response.data && error.response.data.errors)
+                   self.form_list_errors =  error.response.data.errors;
+                   else
+                   self.$notify({
+                            group: 'vue',
+                            title: 'Error!',
+                            text: 'Try Again!',
+                            type:'success'
+                            });
                 });
             },
-    async onCreateList() {
-      if (this.validList) {
-        await this.createList(this.list);
-        this.list = {
-          name: '',
-          order: 0,
-          archived: false,
-        };
-      }
-    },
+
   },
 };
 </script>

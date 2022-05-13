@@ -43,7 +43,7 @@ class TrelloBoard extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required|string|unique:card_lists,list_id',
+            'title' => 'required|string|unique:card_lists',
             'description' => 'required|string',
             'list_id' => 'required|exists:col_lists,id'
 
